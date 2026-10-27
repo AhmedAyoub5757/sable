@@ -1,0 +1,33 @@
+:root {
+  /* Base palette - Dark (default) */
+  --color-bg: #0a0908;
+  --color-bg-elevated: #121110;
+  --color-surface: #181614;
+  --color-text-primary: #f5f0e8;
+  --color-text-secondary: #a89f91;
+  --color-accent: #d4a853;       /* warm amber */
+  --color-accent-soft: #8a6d3a;
+  --color-border: rgba(245, 240, 232, 0.08);
+  --color-overlay: rgba(10, 9, 8, 0.6);
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", "Helvetica Neue", sans-serif;
+
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-base: 0.8s;
+
+  --container-width: 1280px;
+  --gutter: clamp(1.5rem, 5vw, 4rem);
+}
+
+:root[data-theme="light"] {
+  --color-bg: #f5f0e8;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ece5d8;
+  --color-text-primary: #15120e;
+  --color-text-secondary: #5c5347;
+  --color-accent: #8a5a2b;
+  --color-accent-soft: #b98a4e;
+  --color-border: rgba(21, 18, 14, 0.08);
+  --color-overlay: rgba(245, 240, 232, 0.6);
+}
