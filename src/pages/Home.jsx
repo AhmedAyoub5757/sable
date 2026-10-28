@@ -1,11 +1,8 @@
-import PageTransition from "../components/PageTransition";
-
 export default function Home() {
   return (
-    <PageTransition>
-      <section style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
-        <h1>Home — coming next</h1>
-      </section>
-    </PageTransition>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-white p-8">
+      <h1 className="text-4xl font-bold mb-4">Home Page</h1>
+      <p className="text-zinc-400">Welcome to masterofflavor.com</p>
+    </div>
   );
 }

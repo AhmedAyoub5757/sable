@@ -1,26 +1,35 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { useSmoothScroll } from "./animations/useSmoothScroll";
+import SmoothScroll from "./components/SmoothScroll.jsx";
+import PageTransition from "./components/PageTransition.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
 
-import Home from "./pages/Home";
-// import Shop from "./pages/Shop";
-// import ProductDetail from "./pages/ProductDetail";
-// import Story from "./pages/Story";
-// import Visit from "./pages/Visit";
+import Home from "./pages/Home.jsx";
+import Flavors from "./pages/Flavors.jsx";
+import FlavorDetail from "./pages/FlavorDetail.jsx";
+import TheCraft from "./pages/TheCraft.jsx";
+import Contact from "./pages/Contact.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   const location = useLocation();
-  useSmoothScroll();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:slug" element={<ProductDetail />} />
-        <Route path="/story" element={<Story />} />
-        <Route path="/visit" element={<Visit />} />
-      </Routes>
-    </AnimatePresence>
+    <SmoothScroll>
+      {/* Navbar lives outside AnimatePresence — it should persist,
+          not transition in/out with page changes */}
+      <Navbar />
+
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/flavors" element={<PageTransition><Flavors /></PageTransition>} />
+          <Route path="/flavors/:slug" element={<PageTransition><FlavorDetail /></PageTransition>} />
+          <Route path="/the-craft" element={<PageTransition><TheCraft /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+    </SmoothScroll>
   );
 }

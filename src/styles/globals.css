@@ -1,0 +1,56 @@
+:root {
+  /* Palette */
+  --color-charcoal: #171717;
+  --color-forest: #06110c;
+  --color-crimson: #a31c1b;
+
+  --color-bg: var(--color-charcoal);
+  --color-bg-deep: var(--color-forest);
+  --color-accent: var(--color-crimson);
+  --color-text: #f2f0ec;
+  --color-text-muted: #a6a39d;
+
+  /* Fonts */
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Manrope", sans-serif;
+
+  /* Spacing / scale */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing, not native CSS */
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text);
+}
