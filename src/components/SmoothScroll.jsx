@@ -2,6 +2,11 @@ import { useEffect } from 'react'
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
+    if (!window.Lenis || !window.gsap || !window.ScrollTrigger) {
+      console.warn('Lenis/GSAP not loaded yet — check index.html CDN script tags')
+      return
+    }
+
     const lenis = new window.Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -10,15 +15,17 @@ export default function SmoothScroll({ children }) {
 
     lenis.on('scroll', window.ScrollTrigger.update)
 
-    gsap.ticker.add((time) => {
+    const raf = (time) => {
       lenis.raf(time * 1000)
-    })
-    gsap.ticker.lagSmoothing(0)
+    }
+    window.gsap.ticker.add(raf)
+    window.gsap.ticker.lagSmoothing(0)
 
     return () => {
+      window.gsap.ticker.remove(raf)
       lenis.destroy()
     }
   }, [])
 
-  return children
+  return <>{children}</>
 }
