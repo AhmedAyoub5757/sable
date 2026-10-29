@@ -1,0 +1,41 @@
+:root {
+  /* Brand palette */
+  --color-plum: #3a0f34;
+  --color-plum-deep: #220a1f;
+  --color-mauve: #c9a0a7;
+  --color-mauve-soft: #e4cdd1;
+  --color-terracotta: #c75a3a;
+  --color-terracotta-bright: #e07450;
+  --color-cream: #f6ece7;
+
+  /* Semantic */
+  --bg-primary: var(--color-plum-deep);
+  --bg-secondary: var(--color-plum);
+  --text-primary: var(--color-cream);
+  --text-secondary: var(--color-mauve);
+  --accent: var(--color-terracotta);
+  --accent-hover: var(--color-terracotta-bright);
+
+  /* Fonts */
+  --font-display: 'Unbounded', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-accent: 'Fraunces', serif;
+
+  /* Motion */
+  --ease-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--color-cream);
+}

@@ -4,33 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FORGE — Craft Shakes</title>
-    <meta name="description" content="FORGE — small-batch craft shakes, forged bold." />
-
+    <meta
+      name="description"
+      content="FORGE — small-batch craft shakes, forged bold."
+    />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@300;400;500;700;800&family=Fraunces:ital,wght@0,400;1,400;1,500&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Phosphor Icons (CDN icon font) -->
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css" />
-
-    <!-- GSAP core + plugins (CDN) -->
+    <!-- GSAP + ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
-    <!-- Lenis smooth scroll (CDN) -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
-
-    <!-- Three.js (CDN, for hero WebGL scene later) -->
+    <!-- Three.js (for WebGL hero / glass-liquid shader work later) -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
 
-    <!-- Favicon (swap filenames once assets are generated) -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Lenis (buttery smooth scroll, pairs cleanly with GSAP ScrollTrigger) -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <!-- Iconify (lets us pull Iconly-style icon sets as <iconify-icon icon="iconly-..."/>) -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
