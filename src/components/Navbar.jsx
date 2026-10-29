@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sparkles, Mail, ChevronDown, Globe, ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { Menu, X, Globe, ArrowRight, ChevronDown } from 'lucide-react'
 
-// Assets
 import logo from '../assets/images/logo.png'
 import ghImg from '../assets/images/gh.png'
 import mbImg from '../assets/images/mb.png'
@@ -20,6 +19,8 @@ const FLAVORS_CATALOG = [
     image: ghImg,
     intensity: '3 / 5',
     path: '/flavors/golden-hour',
+    colorDark: '#4a3310',
+    colorLight: '#f0dcae',
   },
   {
     id: '02',
@@ -28,6 +29,8 @@ const FLAVORS_CATALOG = [
     image: mbImg,
     intensity: '4 / 5',
     path: '/flavors/midnight-berry',
+    colorDark: '#2a0a26',
+    colorLight: '#c9a0a7',
   },
   {
     id: '03',
@@ -36,6 +39,8 @@ const FLAVORS_CATALOG = [
     image: mpImg,
     intensity: '2 / 5',
     path: '/flavors/matcha-blossom',
+    colorDark: '#2e3b1f',
+    colorLight: '#c7d6a0',
   },
   {
     id: '04',
@@ -44,14 +49,25 @@ const FLAVORS_CATALOG = [
     image: tsImg,
     intensity: '5 / 5',
     path: '/flavors/tropical-sunshine',
+    colorDark: '#5c2415',
+    colorLight: '#e3b196',
   },
 ]
+
+const EASE = [0.16, 1, 0.3, 1]
 
 export default function Navbar() {
   const [megaOpen, setMegaOpen] = useState(false)
   const [activeFlavor, setActiveFlavor] = useState(FLAVORS_CATALOG[0])
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const { scrollY } = useScroll()
+
+  // ---- Scroll-linked thinning ----
+  const headerPadY = useTransform(scrollY, [0, 140], [18, 8])
+  const logoHeight = useTransform(scrollY, [0, 140], [56, 38])
+  const headerBgOpacity = useTransform(scrollY, [0, 140], [0.55, 0.88])
+  const headerBg = useTransform(headerBgOpacity, (v) => `rgba(34, 10, 31, ${v})`)
 
   const toggleMobile = () => {
     setMobileOpen((prev) => {
@@ -69,25 +85,27 @@ export default function Navbar() {
   return (
     <motion.header
       className="site-header"
+      style={{ background: headerBg }}
       initial={{ y: -50, opacity: 0, filter: 'blur(10px)' }}
       animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.9, ease: EASE }}
     >
-      {/* Top Main Navigation Bar */}
-      <div className="nav-container">
-        {/* Brand Logo */}
+      <motion.div
+        className="nav-container"
+        style={{ paddingTop: headerPadY, paddingBottom: headerPadY }}
+      >
         <NavLink to="/" className="nav-logo-link" onClick={closeAll}>
-          <img src={logo} alt="LUCID" className="nav-logo-img" />
+          <motion.img
+            src={logo}
+            alt="LUCID"
+            className="nav-logo-img"
+            style={{ height: logoHeight }}
+          />
         </NavLink>
 
-        {/* Center Main Links (3 Items Kept) */}
         <nav className="desktop-nav">
           <ul className="nav-menu">
-            {/* 01 Flavors - Mega Menu Trigger with Chevron Dropdown Icon */}
-            <li
-              className="nav-item"
-              onMouseEnter={() => setMegaOpen(true)}
-            >
+            <li className="nav-item" onMouseEnter={() => setMegaOpen(true)}>
               <NavLink
                 to="/flavors"
                 className={`nav-link ${megaOpen || location.pathname.startsWith('/flavors') ? 'active' : ''}`}
@@ -98,7 +116,6 @@ export default function Navbar() {
               </NavLink>
             </li>
 
-            {/* 02 Story */}
             <li className="nav-item" onMouseEnter={() => setMegaOpen(false)}>
               <NavLink to="/story" className="nav-link" onClick={closeAll}>
                 <span className="nav-num">02</span>
@@ -106,7 +123,6 @@ export default function Navbar() {
               </NavLink>
             </li>
 
-            {/* 03 Contact (Ingredients removed) */}
             <li className="nav-item" onMouseEnter={() => setMegaOpen(false)}>
               <NavLink to="/contact" className="nav-link" onClick={closeAll}>
                 <span className="nav-num">03</span>
@@ -116,36 +132,40 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Right Mobile Menu Toggle */}
         <div className="nav-actions">
           <button className="mobile-toggle" onClick={toggleMobile} aria-label="Toggle Navigation">
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Single Editorial Mega Menu Container with Smooth Opening/Closing */}
+      {/* Mega menu — background now tied to activeFlavor */}
       <AnimatePresence>
         {megaOpen && (
           <motion.div
             className="mega-panel-wrapper"
             initial={{ opacity: 0, height: 0, y: -10, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, height: 'auto', y: 0, filter: 'blur(0px)' }}
+            animate={{
+              opacity: 1,
+              height: 'auto',
+              y: 0,
+              filter: 'blur(0px)',
+              background: `linear-gradient(160deg, ${activeFlavor.colorDark} 0%, #1a0617 85%)`,
+            }}
             exit={{ opacity: 0, height: 0, y: -10, filter: 'blur(10px)' }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: EASE }}
             onMouseLeave={() => setMegaOpen(false)}
           >
             <div className="mega-panel-inner">
-              {/* First Column: Brand Statement & Social Icons */}
               <motion.div
                 className="mega-col mega-brand-col"
                 initial={{ opacity: 0, x: -20, filter: 'blur(6px)' }}
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.4, delay: 0.1, ease: EASE }}
               >
                 <div className="brand-statement">
-                  <h4>LUCID Elixirs</h4>
-                  <p>Botanical sparkling waters engineered for clarity, elevated focus, and refined taste.</p>
+                  <h4>LUCID Shakes</h4>
+                  <p>Craft shakes made transparent — real ingredients, real color, nothing hidden.</p>
                 </div>
 
                 <div className="social-links-group">
@@ -167,7 +187,6 @@ export default function Navbar() {
                 </div>
               </motion.div>
 
-              {/* Second Column: Staggered Catalog List */}
               <motion.div
                 className="mega-col mega-catalog"
                 initial={{ opacity: 0, y: 15 }}
@@ -196,12 +215,11 @@ export default function Navbar() {
                 </ul>
               </motion.div>
 
-              {/* Third Column: Enhanced Entrance Dynamic Item Spotlight */}
               <motion.div
                 className="mega-col mega-spotlight"
                 initial={{ opacity: 0, x: 30, scale: 0.95, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: 0.2, ease: EASE }}
               >
                 <div className="spotlight-content">
                   <motion.h3
@@ -229,8 +247,11 @@ export default function Navbar() {
                       <motion.span
                         key={activeFlavor.intensity}
                         initial={{ width: 0 }}
-                        animate={{ width: `${(parseInt(activeFlavor.intensity) / 5) * 100}%` }}
-                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        animate={{
+                          width: `${(parseInt(activeFlavor.intensity) / 5) * 100}%`,
+                          background: activeFlavor.colorLight,
+                        }}
+                        transition={{ duration: 0.4, ease: EASE }}
                       />
                     </div>
                   </div>
@@ -241,7 +262,6 @@ export default function Navbar() {
                   </NavLink>
                 </div>
 
-                {/* Bottle Showcase & Watermark Number */}
                 <div className="spotlight-visual">
                   <motion.span
                     className="watermark-num"
@@ -258,7 +278,7 @@ export default function Navbar() {
                     className="spotlight-image"
                     initial={{ opacity: 0, y: 30, scale: 0.9, filter: 'blur(6px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.45, ease: EASE }}
                   />
                 </div>
               </motion.div>
@@ -267,7 +287,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Drawer (3 Items Kept) */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -275,7 +294,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.35, ease: EASE }}
           >
             <nav className="mobile-nav">
               <NavLink to="/flavors" className="mobile-link" onClick={closeAll}>
