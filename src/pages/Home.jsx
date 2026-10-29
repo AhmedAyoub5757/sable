@@ -1,8 +1,17 @@
+import PageTransition from '../components/PageTransition.jsx'
+import Hero from '../components/Hero/Hero.jsx'
+import './Home.css'
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-white p-8">
-      <h1 className="text-4xl font-bold mb-4">Home Page</h1>
-      <p className="text-zinc-400">Welcome to masterofflavor.com</p>
-    </div>
-  );
+    <PageTransition>
+      <main className="home-page">
+        <Hero />
+<h1>
+  hello world
+</h1>
+        {/* Next sections go here as we build them */}
+      </main>
+    </PageTransition>
+  )
 }

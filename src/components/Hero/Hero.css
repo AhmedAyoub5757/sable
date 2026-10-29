@@ -1,0 +1,246 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 120px 6vw 60px;
+
+  /* ===== Tweak these to resize things ===== */
+  --cup-size: 90%;
+  --stage-size: min(660px, 52vw);
+  --blob-size: clamp(500px, 40vmin, 640px);
+}
+
+/* ============ Perfect arch blob with fill-wipe ============ */
+.hero-blob-wrap {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--blob-size);
+  height: var(--blob-size); /* equal width/height = true quarter circle */
+  border-radius: 100% 0 0 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-blob-base,
+.hero-blob-fill {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ LHS ============ */
+.hero-lhs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 460px;
+}
+
+.hero-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.hero-tagline {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.01em;
+}
+
+.hero-description {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 380px;
+}
+
+/* Switcher */
+.hero-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.hero-switcher-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-switcher-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.hero-switcher-icon {
+  position: relative;
+  width: 44px;
+  height: 64px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.hero-switcher-pill {
+  position: absolute;
+  inset: -10px -14px;
+  border-radius: 999px;
+  opacity: 0.28;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.hero-switcher-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
+}
+
+/* ============ RHS ============ */
+.hero-rhs {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.hero-stage {
+  position: relative;
+  width: var(--stage-size);
+  aspect-ratio: 1 / 1;
+}
+
+/* Cup */
+.hero-cup-outer {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: var(--cup-size);
+}
+
+.hero-cup-inner {
+  width: 100%;
+}
+
+.hero-cup-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 35px 50px rgba(0, 0, 0, 0.45));
+}
+
+/* Props */
+.hero-prop-outer {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transform-origin: center center;
+}
+
+.hero-prop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.35));
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 1200px) {
+  .hero {
+    --stage-size: min(560px, 50vw);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero {
+    --blob-size: clamp(260px, 60vmin, 480px);
+    --stage-size: min(460px, 78vw);
+    --cup-size: 76%;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .hero-lhs {
+    min-height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text-block {
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .hero-description {
+    max-width: 440px;
+  }
+
+  .hero-switcher {
+    align-items: center;
+  }
+
+  .hero-stage {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero {
+    padding: 110px 6vw 50px;
+    --blob-size: clamp(220px, 70vmin, 380px);
+    --stage-size: 84vw;
+    --cup-size: 74%;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero {
+    --cup-size: 70%;
+  }
+
+  .hero-switcher-row {
+    gap: 14px;
+  }
+}
