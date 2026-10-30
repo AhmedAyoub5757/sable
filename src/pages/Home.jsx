@@ -7,9 +7,9 @@ export default function Home() {
     <PageTransition>
       <main className="home-page">
         <Hero />
-<h1>
-  hello world
-</h1>
+<h1>  
+  hello world new day
+</h1> 
         {/* Next sections go here as we build them */}
       </main>
     </PageTransition>

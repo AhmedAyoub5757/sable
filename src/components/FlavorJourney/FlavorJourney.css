@@ -1,0 +1,14 @@
+.flavor-journey {
+  position: relative;
+}
+
+.journey-clone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  pointer-events: none;
+  z-index: 500;
+  filter: drop-shadow(0 35px 50px rgba(0, 0, 0, 0.45));
+  will-change: left, top, width, height, transform, opacity;
+}
